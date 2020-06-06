@@ -3,8 +3,8 @@
 
 
 #’ÊMæURL
-update_url=""
+update_url="http://localhost:8091/test.php"
 
 #Œëì“®–h~—p‚Ì‹N“®•¶š—ñ
-wakeWord=""
+wakeWord="hello"
 
