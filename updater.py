@@ -46,7 +46,7 @@ if args.wakeWord == constants.wakeWord:
 		)
 		up_path.unlink()						#アップデータを削除
 		dialog("アップデートが正常に完了しました。アプリケーションを起動します。", "完了")
-		subprocess.run((args.arg1))# アプリケーションを起動
+		subprocess.Popen((args.arg1))# アプリケーションを起動
 	elif not args.u:# アップデートが必要か確認
 		url = "%s?name=%s&version=%s" % (constants.update_url, args.arg1, args.arg2)# 引数からURLを生成
 		response = requests.get(url)# サーバーに最新バージョンを問い合わせる
