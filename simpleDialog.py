@@ -3,5 +3,5 @@
 #Copyright (C) 2020 guredora <contact@guredora.com>
 
 import ctypes
-def dialog(title,message):
+def dialog(message, title):
 	ctypes.windll.user32.MessageBoxW(0,message,title,0x00000040)
