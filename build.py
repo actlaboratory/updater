@@ -17,5 +17,5 @@ if os.path.exists("dist\\updater.exe"):
 	shutil.rmtree("dist\\")
 
 print("Building...")
-runcmd("pyinstaller --onefile --log-level=ERROR updater.py constants.py")
+runcmd("pyinstaller --onefile --windowed --log-level=ERROR updater.py constants.py")
 print("Done!")
