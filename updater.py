@@ -11,7 +11,7 @@ import sys
 import zipfile
 
 def exchandler(type, exc, tb):
-	dialog("エラーが発生しました")
+	dialog("エラーが発生しました", "エラー")
 	msg=traceback.format_exception(type, exc, tb)
 	print("".join(msg))
 	f=open("errorLog.txt", "a")
