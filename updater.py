@@ -18,6 +18,7 @@ def exchandler(type, exc, tb):
 	f=open("errorLog.txt", "a")
 	f.writelines(msg)
 	f.close()
+	sys.exit()
 sys.excepthook=exchandler
 
 parser = argparse.ArgumentParser(add_help=True)
@@ -39,8 +40,6 @@ if args.wakeWord == constants.wakeWord:
 		sys.exit()
 	with open(args.arg2, mode="rb") as f:
 		up_hash = hashlib.sha1(f.read()).hexdigest()
-		print(up_hash)
-		print(args.hash)
 		if up_hash != args.hash:
 			dialog("アップデーターのハッシュが登録されたものと一致しません。糸せず表示された場合は作者までご連絡ください。", "エラー")
 			sys.exit()
