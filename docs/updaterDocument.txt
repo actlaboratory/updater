@@ -1,45 +1,25 @@
-		updaterの使い方について
-	1  準備
-1．updater側はconstants.pyのwakeWordに文字列を設定する。この文字列は後で必要になるので記録しておく。
-2．updater.pyを実行ファイルにする。方法は現在検討中。
-3．生成された実行ファイルをアプリケーションのディレクトリに配置する。
-4．update.pyをアプリケーション側からimportできる場所に配置する。
-5．errorCodes.pyをアプリケーションディレクトリに配置するかすでにある場合は中身の定数をコピーして使用する。
+	actlab updaterアプリケーション側マニュアル
+このupdaterはviewkitを使用していることを前提とする。
 
-	2  実装
-1．update.pyを任意の場所でimportしてupdate.pyのupdateクラスをオブジェクト化する。
-2．update.check()とupdate.run()でアップデートの確認と実行ができる。
+	1.実装
+templateディレクトリのviews/updateDialog.py、update.pyをそれぞれ実装するソフトウェアのディレクトリにコピーする。
+また以下のファイルについてはtemplateディレクトリをっ参考に以下のように追記する。
+defaultSettings.py:
+	generalにtimeoutとupdateを、networkにauto_proxyを追加する。
+app.py:
+	initialize関数内にtemplateの以下の範囲をそれぞれコピーする。
+	23行目から３３行目をmainView表示前に
+	次にsetGlobalVars関数をテンプレートからコピーする。すでに存在していればtemplateの関数内の処理を追記する。
+globalVars.py:
+	update = Noneを追記する。
+constants.py:
+	templateで定義されている定数三つを追記する。
+errorCodes.py:
+	templateで定義されている定数すべてを追記する。
 
-	2-1  関数の説明
-updateクラスにはupdate.check(()とupdate.run()の二つの関数がある。
+アプリケーション内でアップデートを実行したいときは以下のようにする。
+globalVars.update.update(auto = False)
+autoは起動時の自動確認などある程度のエラーは無視してもよいときにTrueにする。
 
-	2-1-1  update.check(app_name, current_version, check_url)
-アップデートやその他連絡などがないかサーバーに問い合わせる。
-この関数はapiDocument.mdで定めた応答コードを返す。
-応答コードの種類によってupdateクラスにプロパティーが設定される。
-設定されない応答コードも存在するので設定されるもののみを記載する。
+またアップデートサーバー側へのソフトウェア情報の登録が必要であるがここでは割愛する。
 
-200の場合：
-update.download: アップデーターのurl。
-update.description: アップデートの簡単な説明。
-update.version: 最新バージョンのバージョン番号。
-
-205の場合:
-update.URL: ユーザーに訪問を求めるページのURL。
-self.description:ユーザーをサイトに誘導する簡単な説明。
-
-呼び出し元ではこの応答コードによって処理の分岐が必要である。
-関数の引数は以下の通り。apiDocument.mdと関連している。
-app_name: サーバーに登録されているアプリケーション名。
-current_version:アプリケーションの現在のバージョン。
-check_url: サーバー側のAPIがあるURL
-
-
-	2-1-2 update.run(wakeWord)
-アップデートを実行する。
-これにはupdate.checkの応答コードが200でupdate.downloadにURLが設定されている必要がある。
-アップデーターをダウンロードして実行した後sys.exit()でアプリケーションを終了させるので注意。
-wakeWordにはconstants.pyで設定した文字列を使用する。
-アップデート完了後ダウンロードされたアップデーターは自動で削除されユーザー通知の後アプリケーションが起動する。
-
-このドキュメントと合わせてapiDocumentも参照することを推奨する。
